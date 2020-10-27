@@ -12,6 +12,17 @@ function CadastroCategoria() {
     }
     const [values, setValues] = useState(valoresIniciais);
 
+    function setValue(chave, valor){
+      setValues({
+        ...values,
+        [chave]: valor
+      })
+    }
+
+    function handleChange(infosDoEvento){
+      setValue(infosDoEvento.target.getAttribute('name'), infosDoEvento.target.value);
+    }
+
     return(
       <PageDefault>
         <h1>Cadastro de Categoria: { values.nome } </h1>
@@ -27,26 +38,17 @@ function CadastroCategoria() {
         <div>
             <label>
                 Nome da Categoria:
-                <input type="text" value={values.nome}
-                onChange = { function funcaoQueOerroPediu(infosDoEvento){
-                  setValues(infosDoEvento.target.value);
-                }} />
+                <input type="text" name="nome" value={values['nome']} onChange = { handleChange } />
             </label>
 
             <label>
                 Descrição:
-                <textarea type="text" value={values.descricao}
-                onChange = { function funcaoQueOerroPediu(infosDoEvento){
-                  setValues(infosDoEvento.target.value);
-                }} />
+                <textarea type="text" name="descricao" value={values.descricao} onChange = { handleChange } />
             </label>
 
             <label>
                 Cor:
-                <input type="color" value={values.cor}
-                onChange = { function funcaoQueOerroPediu(infosDoEvento){
-                  setValues(infosDoEvento.target.value);
-                }} />
+                <input type="color" name="cor" value={values.cor} onChange = { handleChange } />
             </label>
         </div>
 
