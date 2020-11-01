@@ -1,15 +1,22 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import PageDefault from '../../../components/PageDefault';
+import FormField from '../../../components/FormField';
 
 function CadastroCategoria() {
 
-    const [categorias, setCategoria] = useState(['Teste']);
     const valoresIniciais = {
-      nome: 'Nome Inicial',
-      descricao: 'Descrição Inicial',
-      cor: '#000',
+      nome: '',
+      descricao: '',
+      cor: '',
     }
+
+    const [categorias, setCategoria] = useState(['']);
+    /*
+    O "useState" recebe dois parâmetros: um valor (categorias) e uma função (setCategoria).
+    O "categorias" printa a string "Teste".
+    O "setCategoria" altera o valor que fica dentro do "useState".
+    */
     const [values, setValues] = useState(valoresIniciais);
 
     function setValue(chave, valor){
@@ -20,10 +27,14 @@ function CadastroCategoria() {
     }
 
     function handleChange(infosDoEvento){
-      setValue(infosDoEvento.target.getAttribute('name'), infosDoEvento.target.value);
+      const { getAttribute, value } = infosDoEvento.target;
+      setValue(
+        getAttribute('name'),
+        value
+      );
     }
 
-    return(
+    return (
       <PageDefault>
         <h1>Cadastro de Categoria: { values.nome } </h1>
 
@@ -33,24 +44,28 @@ function CadastroCategoria() {
             ...categorias,
             values
           ]);
+
+          setValues(valoresIniciais);
         }}>
 
+        
+        <FormField label="Nome da categoria" type="text" name="nome" value={values.nome} onChange = {handleChange} />
+        
         <div>
-            <label>
-                Nome da Categoria:
-                <input type="text" name="nome" value={values['nome']} onChange = { handleChange } />
-            </label>
-
             <label>
                 Descrição:
                 <textarea type="text" name="descricao" value={values.descricao} onChange = { handleChange } />
             </label>
+        </div>
 
+        <FormField label="Cor" type="color" name="cor" value={values.cor} onChange = {handleChange} />
+        
+        {/*<div>
             <label>
                 Cor:
                 <input type="color" name="cor" value={values.cor} onChange = { handleChange } />
             </label>
-        </div>
+        </div>*/}
 
             
             <button>Cadastrar</button>
@@ -60,7 +75,7 @@ function CadastroCategoria() {
           {categorias.map( (categoria, indice) => {
             return (
               <li key={`${categoria}${indice}`} >
-                {categoria}
+                {categoria.nome}
               </li>
             )
           } )}
