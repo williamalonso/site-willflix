@@ -1,7 +1,7 @@
 import React from 'react';
 import Menu from '../Menu';
 import Footer from '../Footer';
-import styled from 'styled-components';
+import styled from 'styled-components'; // lib que permite escrever código CSS dentro do Javascript
 
 const Main = styled.main`
     background-color: var(--black);
