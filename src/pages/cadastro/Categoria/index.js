@@ -11,18 +11,29 @@ function CadastroCategoria() {
       cor: '',
   }
   const [categorias, setCategoria] = useState([]);
+  /*
+    O 'categorias' printa a string que estiver dentro do useState()
+    O 'setCategoria' altera o valor que fica dentro do useState()
+  */
   const [values, setValues] = useState(valoresIniciais);
 
 
-  function setValue(chave, valor){
+  function setValue(chave, valor){ // essa função recebe o 'name' dos campos do formulário (chamados de chave) e um valor
     setValues({
-      ...values,
-      [chave]: valor
+      ...values, // os 3 pontos mantém o que está escrito e não o sobrescreve, e adiciona o valor novo
+      [chave]: valor // pegamos todos os valores e mudamos só o valor da 'chave' que estamos recebendo. O colchetes transforma 'chave' em valor dinâmico, pois seu valor muda no formulário (nome, descricao, cor)
     })
   } 
 
-  function handleChange(infosDoEvento){
-    setValue(infosDoEvento.target.getAttribute('name'), infosDoEvento.target.value);
+  function handleChange(infosDoEvento){ // função genérica usada nos inputs
+    setValue(infosDoEvento.target.getAttribute('name'), infosDoEvento.target.value); // envia para a função "setValue" os valores do atributo 'name' dos campos de formulário e seu valor
+
+    /*
+      Poderíamos escrever essa função assim:
+
+      const {getAttribute, value} = infosDoEvento.target;
+      setValue( getAttribute('name'), value );
+    */
   };
 
   return ( 
@@ -33,9 +44,9 @@ function CadastroCategoria() {
 
 
       <form onSubmit={function handleSubmit(infosDoEvento) {
-        infosDoEvento.preventDefault();
+        infosDoEvento.preventDefault(); // se não colocar esse comando, a página fica recarregando quando clicamos no botão 'cadastrar'
         setCategoria([
-          ...categorias,
+          ...categorias, // os 3 pontos mantém o que está escrito e não o sobrescreve, e adiciona o valor novo
           values
         ]);
         setValues(valoresIniciais);
